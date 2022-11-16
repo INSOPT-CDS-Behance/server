@@ -1,1 +1,5 @@
-export { default as userController } from "./userController";
+import projectController from "./projectController";
+import likeController from "./likeController";
+import moodboardController from "./moodboardController"
+
+export { projectController, likeController, moodboardController };
