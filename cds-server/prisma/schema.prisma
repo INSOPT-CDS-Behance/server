@@ -1,0 +1,53 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model likehistory {
+  id         Int     @id(map: "like_pkey") @default(autoincrement())
+  user_id    Int
+  project_id Int
+  project    project @relation(fields: [project_id], references: [id], onUpdate: NoAction, map: "like_project_id_fk")
+  user       user    @relation(fields: [user_id], references: [id], onUpdate: NoAction, map: "like_user_id_fk")
+}
+
+model moodboard {
+  id                Int                 @id @default(autoincrement())
+  is_public         Boolean
+  name              String              @db.VarChar(50)
+  user_id           Int
+  user              user                @relation(fields: [user_id], references: [id], onUpdate: NoAction, map: "moodboard_user_id_fk")
+  moodboard_project moodboard_project[]
+}
+
+model moodboard_project {
+  id           Int       @id @default(autoincrement())
+  project_id   Int
+  moodboard_id Int
+  moodboard    moodboard @relation(fields: [moodboard_id], references: [id], onUpdate: NoAction, map: "moodboard_project_moodboard_id_fk")
+  project      project   @relation(fields: [project_id], references: [id], onUpdate: NoAction, map: "moodboard_project_project_id_fk")
+}
+
+model project {
+  id                Int                 @id @default(autoincrement())
+  view_count        Int
+  image             String              @db.VarChar(600)
+  user_id           Int
+  name              String              @db.VarChar(50)
+  likeSum           Int
+  user              user                @relation(fields: [user_id], references: [id], onUpdate: NoAction, map: "project_user_id_fk")
+  likehistory       likehistory[]
+  moodboard_project moodboard_project[]
+}
+
+model user {
+  id          Int           @id(map: "User_pkey") @default(autoincrement())
+  name        String        @db.VarChar(50)
+  likehistory likehistory[]
+  moodboard   moodboard[]
+  project     project[]
+}
