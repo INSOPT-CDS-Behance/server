@@ -1,5 +1,6 @@
 const message = {
     // 200
+    GET_MOODBOARD_SUCCESS: "무드보드 전체 조회 성공",
     
     // 400
     NULL_VALUE: '필요한 값이 없습니다.',
