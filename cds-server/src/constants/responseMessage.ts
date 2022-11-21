@@ -1,5 +1,6 @@
 const message = {
     // 200
+    SUCCESS_GET_ALL_PROJECTS: '프로젝트 목록 조회 성공',
     
     // 400
     NULL_VALUE: '필요한 값이 없습니다.',
