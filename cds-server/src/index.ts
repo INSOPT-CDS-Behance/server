@@ -1,5 +1,7 @@
 import express, { NextFunction, Request, Response } from "express";
 import router from "./router";
+import cors from "cors";
+
 
 const app = express(); // express 객체 받아옴
 const PORT = 8080; // 사용할 port를 3000번으로 설정
@@ -10,11 +12,19 @@ app.use("/", router); // use -> 모든 요청
 // localhost:8000/api -> api 폴더
 // localhost:8000/api/user -> user.ts
 
-app.use('/', function(req: Request, res: Response, next: NextFunction) {
-  res.header("Access-Control-Allow-Origin", "*");
-  res.header("Access-Control-Allow-Headers", "X-Requested-With");
-  next();
-});
+// app.use('/', function(req: Request, res: Response, next: NextFunction) {
+//   res.header("Access-Control-Allow-Origin", "*");
+//   res.header("Access-Control-Allow-Headers", "X-Requested-With");
+//   next();
+// });
+
+app.use(
+  cors({
+      credentials: true,
+      origin: ['http://localhost:3000'],
+      optionsSuccessStatus: 200,
+  }),
+);
 
 
 //* HTTP method - GET
