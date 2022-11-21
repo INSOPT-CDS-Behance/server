@@ -7,24 +7,37 @@ import { projectService } from "../service";
 const getProjectDetail = async (req: Request, res: Response) => {
     const projectId = req.params.projectId;
 
-    if (!projectId) {
-        res.status(statusCode.BAD_REQUEST).send(fail(statusCode.BAD_REQUEST, message.NULL_VALUE));
+    try {
+        if (!projectId) {
+            throw "no project id"
+        }
+        
+        const data = await projectService.getProjectDetail(+projectId);
+    
+        if (!data) {
+            throw  "no project"
+        }
+    
+        const result = {
+            "id": data?.id,
+            "writer": data?.user.name,
+            "image": data?.image,
+            "isLiked": (data!.likehistory.length > 0)
+        }
+    
+        return res.status(statusCode.OK).send(success(statusCode.OK, message.SUCCESS_GET_PROJECT_DETAIL, result));
+    }
+    catch (error) {
+        if (error == "project id null") {
+            return res.status(statusCode.BAD_REQUEST).send(fail(statusCode.BAD_REQUEST, message.NULL_VALUE));
+        }
+        else if (error == "no project") {
+            return res.status(statusCode.NOT_FOUND).send(fail(statusCode.NOT_FOUND, message.NOT_FOUND_PROJECTS));
+        }
+
+        return res.status(statusCode.INTERNAL_SERVER_ERROR).send(fail(statusCode.INTERNAL_SERVER_ERROR, message.INTERNAL_SERVER_ERROR));
     }
     
-    const data = await projectService.getProjectDetail(+projectId);
-
-    if (!data) {
-        return res.status(statusCode.NOT_FOUND).send(fail(statusCode.NOT_FOUND, message.NOT_FOUND_PROJECTS));
-    }
-
-    const result = {
-        "id": data?.id,
-        "writer": data?.user.name,
-        "image": data?.image,
-        "isLiked": (data!.likehistory.length > 0)
-    }
-
-    return res.status(statusCode.OK).send(success(statusCode.OK, message.SUCCESS_GET_PROJECT_DETAIL, result));
 }
 
 const getAllProjects = async (req: Request, res: Response) => {
