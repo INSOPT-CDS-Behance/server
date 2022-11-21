@@ -15,6 +15,12 @@ app.get("/", (req: Request, res: Response, next: NextFunction) => {
   res.send("마! 이게 서버다!!!!!!!!!!!!!!!!!!!!");
 });
 
+app.all('/*', function(req, res, next) {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Headers", "X-Requested-With");
+  next();
+});
+
 app.listen(PORT, () => {
   console.log(`
         #############################################
