@@ -7,15 +7,21 @@ import { success, fail } from "../constants/response";
 const like = async (req: Request, res: Response) => {
     const { projectId, userId } = req.body;
 
-    //userId 일단 현재사용자로 고정, 존재하는 프로젝트인지만 확인
+    //projectId 안넣어준 경우
     if (!projectId) {
-        return res.status(sc.BAD_REQUEST).send(fail(sc.BAD_REQUEST, rm.NOT_FOUND))
+        return res.status(sc.NULL_VALUE).send(fail(sc.NULL_VALUE, rm.NULL_VALUE));
     }
 
     //좋아요 눌러진 상태이면 --> 좋아요 취소하기
     const isliked = await likeService.isLiked(projectId, userId);
+    //projectId/userId 가 유효하지 않은 값일 경우 --> 서버에러 --> 해당메시지 출력
+    if(isliked == rm.INTERNAL_SERVER_ERROR){
+        return res.status(sc.INTERNAL_SERVER_ERROR).send(fail(sc.INTERNAL_SERVER_ERROR, rm.NOT_FOUND_VALUE));
+    }
+
     if (isliked) {
         const likeHistory = await likeService.deleteLikeHistory(isliked.id); //isliked.id : 해당 projectid, userid를 갖는 likehistory테이블의 id
+
 
         const likeSum = await likeService.updateLikeSum(projectId, true);
         if (!likeSum) {
@@ -27,6 +33,10 @@ const like = async (req: Request, res: Response) => {
 
     //좋아요 안눌러진 상태이면 --> 좋아요 누르기
     const likeHistory = await likeService.createLikeHistory(projectId, userId);
+    if(likeHistory == rm.INTERNAL_SERVER_ERROR){
+        return res.status(sc.INTERNAL_SERVER_ERROR).send(fail(sc.INTERNAL_SERVER_ERROR, rm.NOT_FOUND_VALUE));
+    }
+    
     if (!likeHistory) {
         return res.status(sc.BAD_REQUEST).send(fail(sc.BAD_REQUEST, rm.NOT_FOUND))
 

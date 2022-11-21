@@ -1,21 +1,22 @@
-import { sc } from "../constants";
+import { rm } from "../constants";
 
 const { PrismaClient } = require("@prisma/client");
 const prisma = new PrismaClient();
 
 const createLikeHistory = async (projectId: number, userId: number) => {
-    const data = await prisma.likehistory.create({
-        data: {
-            project_id: projectId,
-            user_id: userId
-        },
-
-    });
-
-    if(!data)
-        return null;
-    return data;
-
+    try{
+        const data = await prisma.likehistory.create({
+            data: {
+                project_id: projectId,
+                user_id: userId
+            }
+        });
+        return data;
+    }
+    catch(error){
+        console.log(error);
+        return rm.INTERNAL_SERVER_ERROR;
+    }
 };
 
 
@@ -55,19 +56,24 @@ const updateLikeSum = async (projectId: number, isliked: boolean) => {
 
     return data;
 
-}
+};
 
 
 const isLiked = async (projectId: number, userId: number) => {
-    const isliked = await prisma.likehistory.findFirst({
-        where: {
-            project_id: projectId,
-            user_id: userId,
-        }
-    });
-    //console.log("isliked"+isliked);
-    return isliked;
-}
+    try{
+        const isliked = await prisma.likehistory.findFirst({
+            where: {
+                project_id: projectId,
+                user_id: userId,
+            }
+        });
+        return isliked;
+    }
+    catch(error){
+        console.log(error);
+        return rm.INTERNAL_SERVER_ERROR;
+    }
+};
 
 
 const likeService = {

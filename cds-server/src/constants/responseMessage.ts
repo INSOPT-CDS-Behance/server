@@ -16,7 +16,7 @@ const message = {
     
     MB_PATCH_FAIL: "무드보드 편집 실패",
 
-    NOT_FOUND_PROJECTS: "존재하지 않는 프로젝트 입니다.",
+    NOT_FOUND_VALUE: "projectid 혹은 userid 값이 유효하지 않습니다",
 
     // 500
     INTERNAL_SERVER_ERROR: '서버 내부 오류',
