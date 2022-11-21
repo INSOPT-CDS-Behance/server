@@ -1,8 +1,9 @@
 const message = {
     // 200
+    GET_MOODBOARD_SUCCESS: "무드보드 전체 조회 성공",
+    POST_LIKE_SUCCESS: "좋아요 성공",
 
     MB_PATCH_SUCCESS: "무드보드 편집 성공",
-    GET_MOODBOARD_SUCCESS: "무드보드 전체 조회 성공",
     
     // 400
     NULL_VALUE: '필요한 값이 없습니다.',
