@@ -25,6 +25,8 @@ const updateMoodboard = async ( req: Request, res: Response ) => {
 
     if(!updateMoodboard)
             return res.status(sc.MB_PATCH_FAIL).send(fail(sc.MB_PATCH_FAIL, rm.MB_PATCH_FAIL));
+    if(updateMoodboard == rm.INTERNAL_SERVER_ERROR)
+    return res.status(sc.INTERNAL_SERVER_ERROR).send(fail(sc.INTERNAL_SERVER_ERROR, rm.INTERNAL_SERVER_ERROR))
 
     return res.status(sc.OK).send(success(sc.OK, rm.MB_PATCH_SUCCESS));
 }
