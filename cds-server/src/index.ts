@@ -12,14 +12,14 @@ app.use("/", router); // use -> 모든 요청
 
 //* HTTP method - GET
 app.get("/", (req: Request, res: Response, next: NextFunction) => {
-  res.send("마! 이게 서버다!!!!!!!!!!!!!!!!!!!!");
+  res.header("Access-Control-Allow-Origin", "*");
 });
 
-app.all('/*', function(req: Request, res: Response, next: NextFunction) {
-  res.header("Access-Control-Allow-Origin", "*");
-  res.header("Access-Control-Allow-Headers", "X-Requested-With");
-  next();
-});
+// app.all('/*', function(req: Request, res: Response, next: NextFunction) {
+//   res.header("Access-Control-Allow-Origin", "*");
+//   res.header("Access-Control-Allow-Headers", "X-Requested-With");
+//   next();
+// });
 
 app.listen(PORT, () => {
   console.log(`
