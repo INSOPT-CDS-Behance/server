@@ -20,7 +20,21 @@ const getProjectDetail = async (projectId: number) => {
     return data;
 }
 
+const getAllProjects = async() => {
+    const data = await prisma.project.findMany({
+        include: {
+            user: {
+                select:{
+                    name: true
+                }
+            }
+        }
+    });
+    return data
+}
+
 const projectService = {
+    getAllProjects,
     getProjectDetail,
 };
 
