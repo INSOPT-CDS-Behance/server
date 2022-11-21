@@ -8,7 +8,7 @@ router.get("/", moodboardController.getAllMoodboard);
 
 
 
-//* 무드보드 편집 - PATCH api/moodboard/:moodboardId
+//* 무드보드 편집 - PATCH api/moodboard
 router.patch("/", moodboardController.updateMoodboard);
 
 
