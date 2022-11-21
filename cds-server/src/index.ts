@@ -10,9 +10,16 @@ app.use("/", router); // use -> 모든 요청
 // localhost:8000/api -> api 폴더
 // localhost:8000/api/user -> user.ts
 
+app.use('/', function(req: Request, res: Response, next: NextFunction) {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Headers", "X-Requested-With");
+  next();
+});
+
+
 //* HTTP method - GET
 app.get("/", (req: Request, res: Response, next: NextFunction) => {
-  res.header("Access-Control-Allow-Origin", "*");
+  res.send("마! 이게 서버다!!!!!!!!!!!!!!!!!!!!");
 });
 
 // app.all('/*', function(req: Request, res: Response, next: NextFunction) {
