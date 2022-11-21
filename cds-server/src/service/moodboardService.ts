@@ -36,7 +36,7 @@ const updateMoodboard = async (MoodboardPatchDTO: MoodboardPatchDTO) => {
     } catch(error) {
         //console.log(error);
         //throw error;
-        return rm.INTERNAL_SERVER_ERROR
+        return rm.NULL_VALUE
     }
 }
 
