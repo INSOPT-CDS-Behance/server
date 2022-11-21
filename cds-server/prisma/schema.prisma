@@ -21,16 +21,9 @@ model moodboard {
   name              String              @db.VarChar(50)
   user_id           Int
   user              user                @relation(fields: [user_id], references: [id], onUpdate: NoAction, map: "moodboard_user_id_fk")
-  moodboard_project moodboard_project[]
+  project           project[]
 }
 
-model moodboard_project {
-  id           Int       @id @default(autoincrement())
-  project_id   Int
-  moodboard_id Int
-  moodboard    moodboard @relation(fields: [moodboard_id], references: [id], onUpdate: NoAction, map: "moodboard_project_moodboard_id_fk")
-  project      project   @relation(fields: [project_id], references: [id], onUpdate: NoAction, map: "moodboard_project_project_id_fk")
-}
 
 model project {
   id                Int                 @id @default(autoincrement())
@@ -41,7 +34,8 @@ model project {
   likeSum           Int
   user              user                @relation(fields: [user_id], references: [id], onUpdate: NoAction, map: "project_user_id_fk")
   likehistory       likehistory[]
-  moodboard_project moodboard_project[]
+  moodboard         moodboard           @relation(fields: [moodboard_id], references: [id])
+  moodboard_id      Int
 }
 
 model user {
@@ -50,4 +44,12 @@ model user {
   likehistory likehistory[]
   moodboard   moodboard[]
   project     project[]
+}
+
+model Userrrr {
+  id       Int    @id(map: "userrrr_pk") @unique(map: "userrrr_id_uindex") @default(autoincrement())
+  userName String @db.VarChar(100)
+  age      Int?
+  email    String @db.VarChar(400)
+  password String @db.VarChar(400)
 }
