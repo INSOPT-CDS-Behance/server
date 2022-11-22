@@ -15,7 +15,7 @@ app.use(
 );
 
 app.use(express.urlencoded({ extended: true })); //express 에서 request body를  x-www-form-urlencoded형으로 받아오겠다.
-//app.use(express.json()); // express 에서 request body를 json 으로 받아오겠다.
+app.use(express.json()); // express 에서 request body를 json 으로 받아오겠다.
 
 app.use("/", router); // use -> 모든 요청
 // localhost:8000/api -> api 폴더
