@@ -21,7 +21,7 @@ app.use("/", router); // use -> 모든 요청
 app.use(
   cors({
       credentials: true,
-      origin: ['http://localhost:3000'],
+      origin: ['http://localhost:8080'],
       optionsSuccessStatus: 200,
   }),
 );
