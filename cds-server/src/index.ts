@@ -10,8 +10,7 @@ const PORT = 8080; // 사용할 port를 3000번으로 설정
 app.use(
   cors({
       credentials: true,
-      origin: ['http://localhost:8080'],
-      optionsSuccessStatus: 200,
+      origin: '*',
   }),
 );
 
