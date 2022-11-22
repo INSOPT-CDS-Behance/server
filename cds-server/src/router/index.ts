@@ -6,8 +6,8 @@ import moodboardRouter from "./moodboardRouter";
 const router: Router = Router();
 
 router.use("/project", projectRouter);
-//router.use("/like", likeRouter);
-router.use("/moodboard", moodboardRouter)
 router.use("/project", likeRouter);
+router.use("/moodboard", moodboardRouter)
+
 
 export default router;
