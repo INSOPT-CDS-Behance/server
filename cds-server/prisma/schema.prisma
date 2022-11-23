@@ -20,8 +20,8 @@ model moodboard {
   is_public     Boolean
   name          String    @db.VarChar(50)
   user_id       Int
-  subtitle      String   @db.VarChar(50)
-  profile_count Int      
+  subtitle      String    @db.VarChar(50)
+  profile_count Int
   user          user      @relation(fields: [user_id], references: [id], onUpdate: NoAction, map: "moodboard_user_id_fk")
   project       project[]
 }
