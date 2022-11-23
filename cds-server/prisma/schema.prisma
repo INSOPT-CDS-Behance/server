@@ -16,26 +16,27 @@ model likehistory {
 }
 
 model moodboard {
-  id                Int                 @id @default(autoincrement())
-  is_public         Boolean
-  name              String              @db.VarChar(50)
-  user_id           Int
-  user              user                @relation(fields: [user_id], references: [id], onUpdate: NoAction, map: "moodboard_user_id_fk")
-  project           project[]
+  id            Int       @id @default(autoincrement())
+  is_public     Boolean
+  name          String    @db.VarChar(50)
+  user_id       Int
+  subtitle      String   @db.VarChar(50)
+  profile_count Int      
+  user          user      @relation(fields: [user_id], references: [id], onUpdate: NoAction, map: "moodboard_user_id_fk")
+  project       project[]
 }
 
-
 model project {
-  id                Int                 @id @default(autoincrement())
-  view_count        Int
-  image             String              @db.VarChar(600)
-  user_id           Int
-  name              String              @db.VarChar(50)
-  likeSum           Int
-  user              user                @relation(fields: [user_id], references: [id], onUpdate: NoAction, map: "project_user_id_fk")
-  likehistory       likehistory[]
-  moodboard         moodboard           @relation(fields: [moodboard_id], references: [id])
-  moodboard_id      Int
+  id           Int           @id @default(autoincrement())
+  view_count   Int
+  image        String        @db.VarChar(600)
+  user_id      Int
+  name         String        @db.VarChar(50)
+  likeSum      Int
+  moodboard_id Int
+  moodboard    moodboard     @relation(fields: [moodboard_id], references: [id])
+  user         user          @relation(fields: [user_id], references: [id], onUpdate: NoAction, map: "project_user_id_fk")
+  likehistory  likehistory[]
 }
 
 model user {
